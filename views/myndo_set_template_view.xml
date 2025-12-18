@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.set_plan_template_form" model="ir.ui.view">
+    <field name="name">myndo.set_plan_template_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.set_plan_template</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name" />
+          <field name="description" />
+          <field name="template_type" />
+        </group>
+        <group>
+          <field name="set_fixed_template" widget="boolean_toggle" />
+        </group>
+
+        <notebook>
+          <page string="Related Agency">
+            <group>
+              <field name="template_related_agency"/>
+            </group>
+          </page>
+          <page string="Columns configuration">
+            <separator string="for normal columns" />
+            <field name="template_required_columns" nolabel="1">
+              <list editable="bottom">
+                <field name="column_id" />
+
+                <field name="usage_type" />
+                <field name="decorator" />
+                <field name="is_multiple" widget="boolean_toggle" />
+                <field name="hide_total" widget="boolean_toggle" />
+
+                <!-- Algorithm，open window -->
+                <button name="action_edit_algorithm" type="object" icon="fa-code" string="JS" invisible="usage_type != 'algorithm'" />
+              </list>
+              <form>
+                <group>
+                  <group>
+                    <field name="column_id" />
+                    <field name="usage_type" />
+                  </group>
+                  <group>
+                    <field name="decorator" />
+                  </group>
+                  <group>
+                    <field name="group_fn" />
+                  </group>
+                </group>
+                <!-- JS -->
+                <group string="Algorithm Logic"
+                  invisible="usage_type != 'algorithm'">
+                  <field name="js_code" widget="code" options="{'mode': 'js'}" />
+                  <p class="text-muted"> Example: <code>code;</code>
+                  </p>
+                </group>
+              </form>
+            </field>
+            <!-- <group>
+              <separator string="for flowchart start columns" />
+              <field name="flowchart_start_column" nolabel="1">
+                <list editable="bottom">
+                  <field name="column_id" />
+  
+                  <field name="usage_type" />
+                  <field name="decorator" />
+                  <field name="is_multiple" widget="boolean_toggle" />
+                  <field name="hide_total" widget="boolean_toggle" />
+                </list>
+                <form>
+                  <group>
+                    <group>
+                      <field name="column_id" />
+                      <field name="usage_type" />
+                    </group>
+                    <group>
+                      <field name="decorator" />
+                    </group>
+                    <group>
+                      <field name="group_fn" />
+                    </group>
+                  </group>
+                </form>
+              </field>
+            </group> -->
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.set_plan_template_tree" model="ir.ui.view">
+    <field name="name">myndo.set_plan_template_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.set_plan_template</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="template_required_columns" widget="many2many_tags" context="{'default_template_id' : id}" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.set_plan_template_search" model="ir.ui.view">
+    <field name="name">myndo.set_plan_template_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.set_plan_template</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="name" />
+        <field name="template_required_columns" widget="many2many_tags" context="{'default_template_id' : id}" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.myndo_set_template_action" model="ir.actions.act_window">
+    <field name="name">Template</field>
+    <field name="res_model">myndo.set_plan_template</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="search_view_id" ref="myndo.set_plan_template_search" />
+    <field name="view_id" ref="myndo.set_plan_template_tree" />
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Click to add a template.</p>
+    </field>
+  </record>
+
+</odoo>

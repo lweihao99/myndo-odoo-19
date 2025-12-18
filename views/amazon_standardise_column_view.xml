@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <data noupdate="1">
+    <record id="platform_amazon_ref" model="myndo.platform">
+        <field name="name">Amazon</field>
+    </record>
+
+    <record id="platform_meta_ref" model="myndo.platform">
+        <field name="name">Meta</field>
+    </record>
+  </data>
+
+  <record id="myndo.standardise_platforms_column_form" model="ir.ui.view">
+    <field name="name">myndo.standardise_platforms_column_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.standardise_platforms_column</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="platform_id"/>
+          <field name="platform_column_name" />
+          <field name="platform_column_type"/>
+          <!-- <field name="rel_platform"/> -->
+        </group>
+
+        <notebook>
+          <page string="Standardise columns">
+          <group>
+            <field name="standardise_column" nolabel="1">
+              <list editable="bottom">
+                <field name="column_id" />
+                <field name="usage_type" />
+                <field name="decorator" />
+              </list>
+            </field>
+          </group>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.standardise_platforms_column_tree" model="ir.ui.view">
+    <field name="name">myndo.standardise_platforms_column_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.standardise_platforms_column</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="platform_id" />
+        <field name="platform_column_name" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.standardise_platforms_column_search" model="ir.ui.view">
+    <field name="name">myndo.standardise_platforms_column_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.standardise_platforms_column</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="platform_id" />
+        <field name="platform_column_name" />
+      </search>
+    </field>
+  </record>
+
+  <record id="myndo.amazon_set_columns_action" model="ir.actions.act_window">
+    <field name="name">Platform column</field>
+		<field name="res_model">myndo.standardise_platforms_column</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.standardise_platforms_column_search"/>
+		<field name="view_id" ref="myndo.standardise_platforms_column_tree"/>
+    <!-- show data only for amazon -->
+    <field name="domain" eval="[('platform_id', '=', ref('platform_amazon_ref'))]"></field>
+    <field name="context" eval="{'default_platform_id': ref('platform_amazon_ref')}"></field>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a platform column.</p>
+		</field>
+	</record>
+
+  <record id="myndo.meta_set_columns_action" model="ir.actions.act_window">
+    <field name="name">Platform column</field>
+		<field name="res_model">myndo.standardise_platforms_column</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.standardise_platforms_column_search"/>
+		<field name="view_id" ref="myndo.standardise_platforms_column_tree"/>
+    <!-- show data only for amazon -->
+    <field name="domain" eval="[('platform_id', '=', ref('platform_meta_ref'))]"></field>
+    <field name="context" eval="{'default_platform_id': ref('platform_meta_ref')}"></field>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a platform column.</p>
+		</field>
+	</record>
+
+</odoo>

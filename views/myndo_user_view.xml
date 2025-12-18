@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.user_structure_form" model="ir.ui.view">
+    <field name="name">myndo.user_structure_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.user_structure</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <div class="oe_title">
+            <label for="name" />
+            <h1>
+              <field name="name" placeholder="Name" />
+            </h1>
+            <h2>
+              <field name="surname" placeholder="Surname (e.g. Doe)" />
+            </h2>
+          </div>
+
+          <group>
+            <group>
+              <field name="email" />
+              <field name="role" widget="radio" options="{'horizontal': true}" />
+            </group>
+            <group>
+              <field name="myndo_button" widget="boolean_toggle" />
+            </group>
+          </group>
+        </sheet>
+
+        <notebook>
+          <page string="Clients select">
+            <group string="Filter Strategy">
+              <group>
+                <field name="holding_agency_id" options="{'no_create': True}" />
+              </group>
+              <group>
+                <field name="agency_id" domain="[('holding_agency_id', '=', holding_agency_id)]"
+                  options="{'no_create': True}" />
+              </group>
+            </group>
+
+            <div class="d-flex justify-content-between align-items-end mb-2 mt-4">
+              <separator string="Assigned Clients" class="mb-0" />
+
+              <button name="action_clear_clients"
+                type="object"
+                string="Clear All"
+                icon="fa-trash"
+                class="btn-secondary text-danger"
+                confirm="Are you sure you want to remove all selected clients?"
+                invisible="not client_id" />
+            </div>
+
+            <field name="client_id" widget="many2many"
+              domain="[('holding_client_id.agency_id', '=', agency_id)]" nolabel="1">
+
+              <list string="Clients" editable="bottom" decoration-muted="not id">
+                <field name="name" />
+                <field name="industry" />
+                <field name="short_name" />
+                <field name="country" />
+                <field name="vat_number" optional="hide" />
+              </list>
+            </field>
+
+          </page>
+          <page string="Tools" name="tools">
+            <group>
+              <field name="homepage_tool" />
+              <field name="planner_tool" />
+              <field name="owner_tool" />
+              <field name="calendar_tool" />
+              <field name="sources_tool" />
+              <field name="planner_utilities_tool" />
+              <field name="connector_tool" />
+              <field name="naming_tool" />
+              <field name="reporting_tool" />
+              <field name="reconciliation_tool" />
+              <field name="dashboard_tool" />
+              <field name="myndodashboard_tool" />
+              <field name="partners_tool" />
+              <field name="data_validation_tool" />
+              <field name="forecast_tool" />
+              <field name="governance_tool" />
+            </group>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.user_structure_tree" model="ir.ui.view">
+    <field name="name">myndo.user_structure_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.user_structure</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="surname" />
+        <field name="role" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.user_structure_search" model="ir.ui.view">
+    <field name="name">myndo.user_structure_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.user_structure</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="name" />
+        <field name="surname" />
+        <field name="role" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.myndo_user_action" model="ir.actions.act_window">
+    <field name="name">Columns</field>
+    <field name="res_model">myndo.user_structure</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="search_view_id" ref="myndo.user_structure_search" />
+    <field name="view_id" ref="myndo.user_structure_tree" />
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Click to add a user.</p>
+    </field>
+  </record>
+
+</odoo>

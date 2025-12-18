@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem sequence="20" id="myndo.main_menu" name="Myndo Tool" />	
+		<menuitem sequence="1" id="myndo.client_structure_menu" name="Contacts" parent="myndo.main_menu" />
+		  <menuitem sequence="5" id="myndo.holding_agency_menu" name="Holding agency" parent="myndo.client_structure_menu" action="myndo.holding_agency_action"/>
+		  <menuitem sequence="5" id="myndo.agency_menu" name="Agency" parent="myndo.client_structure_menu" action="myndo.agency_action"/>
+		  <menuitem sequence="5" id="myndo.holding_client_menu" name="Holding client" parent="myndo.client_structure_menu" action="myndo.holding_client_action"/>
+		  <menuitem sequence="5" id="myndo.client_menu" name="Client" parent="myndo.client_structure_menu" action="myndo.client_action"/>
+		  <menuitem sequence="5" id="myndo.divisions_menu" name="Divisions" parent="myndo.client_structure_menu" action="myndo.divisions_action"/>
+		
+		<menuitem sequence="1" id="myndo.columns_menu" name="Columns" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.columns_submenu" name="Columns add" parent="myndo.columns_menu" action="myndo.columns_structure_action"/>
+
+		<menuitem sequence="1" id="myndo.configuration_menu" name="Configuration" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.myndo_user_submenu" name="Myndo user" parent="myndo.configuration_menu" action="myndo.myndo_user_action"/>
+			<menuitem sequence="5" id="myndo.myndo_area_submenu" name="Area" parent="myndo.configuration_menu" action="myndo.myndo_area_action"/>
+			<menuitem sequence="5" id="myndo.myndo_subarea_submenu" name="Subarea" parent="myndo.configuration_menu" action="myndo.myndo_subarea_action"/>
+			<menuitem sequence="5" id="myndo.myndo_deconcat_rules_submenu" name="Deconcat rule" parent="myndo.configuration_menu" action="myndo.myndo_deconcat_rules_action"/>
+			<menuitem sequence="5" id="myndo.myndo_set_template_submenu" name="Set plan template" parent="myndo.configuration_menu" action="myndo.myndo_set_template_action"/>
+			<menuitem sequence="5" id="myndo.myndo_platform_submenu" name="Set myndo platform" parent="myndo.configuration_menu" action="myndo.myndo_platform_action"/>
+
+			<!-- platforms -->
+		<menuitem sequence="1" id="myndo.amazon_ads_main_menu" name="Amazon api" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.amazon_set_columns_submenu" name="Standardise columns" parent="myndo.amazon_ads_main_menu" action="myndo.amazon_set_columns_action"/>
+		<menuitem sequence="1" id="myndo.meta_ads_main_menu" name="Meta api" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.meta_set_columns_submenu" name="Standardise columns" parent="myndo.meta_ads_main_menu" action="myndo.meta_set_columns_action"/>
+
+</odoo>

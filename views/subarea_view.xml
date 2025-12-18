@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.subarea_form" model="ir.ui.view">
+    <field name="name">myndo.subarea_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.subarea</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name" />
+          <field name="clean_name" />
+          <field name="description" />
+        </group>
+        <group>
+          <field name="show_profile" widget="boolean_toggle" />
+          <field name="show_customer" widget="boolean_toggle" />
+          <field name="show_origin" widget="boolean_toggle" />
+          <field name="only_common_cols" widget="boolean_toggle" />
+        </group>
+
+        <notebook>
+          <page string="Related Clients">
+            <group>
+              <field name="clients_ids">
+                <list string="Clients">
+                  <field name="name" />
+                  <field name="short_name" />
+                  <field name="country" />
+                </list>
+              </field>
+            </group>
+          </page>
+          <page string="Related Areas">
+            <group>
+              <field name="rel_areas">
+                <list string="Areas">
+                  <field name="name" />
+                  <field name="clean_name" />
+                  <field name="required_columns" widget="many2many_tags"
+                    context="{'default_area_id' : id}" />
+                </list>
+              </field>
+            </group>
+          </page>
+          <page string="Related Columns configuration">
+            <field name="required_columns" nolabel="1">
+              <list editable="bottom">
+                <field name="column_id" />
+
+                <!-- columns usage -->
+                <field name="usage_type" /> <!-- Dimension/Metric/Alg -->
+                <field name="decorator" />
+                <field name="is_multiple" widget="boolean_toggle" />
+                <field name="hide_total" widget="boolean_toggle" />
+
+                <!-- Algorithm，open window -->
+                <button name="action_edit_algorithm" type="object" icon="fa-code" string="JS" invisible="usage_type != 'algorithm'" />
+              </list>
+              <form>
+                <group>
+                  <group>
+                    <field name="column_id" />
+                    <field name="usage_type" />
+                  </group>
+                  <group>
+                    <field name="decorator" />
+                  </group>
+                  <group>
+                    <field name="group_fn" />
+                  </group>
+                </group>
+                <!-- JS -->
+                <group string="Algorithm Logic"
+                  invisible="usage_type != 'algorithm'">
+                  <field name="js_code" widget="ace" options="{'mode': 'javascript'}" />
+                  <p class="text-muted"> Example: <code>code;</code>
+                  </p>
+                </group>
+              </form>
+            </field>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.subarea_tree" model="ir.ui.view">
+    <field name="name">myndo.subarea_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.subarea</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="clean_name" />
+        <field name="required_columns" widget="many2many_tags" context="{'default_subarea_id' : id}" />
+        <field name="rel_areas" widget="many2many_tags" context="{'default_subarea_id' : id}" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.subarea_search" model="ir.ui.view">
+    <field name="name">myndo.subarea_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.subarea</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="name" />
+        <field name="clean_name" />
+        <field name="required_columns" widget="many2many_tags" context="{'default_subarea_id' : id}" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.myndo_subarea_action" model="ir.actions.act_window">
+    <field name="name">Subarea</field>
+    <field name="res_model">myndo.subarea</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="search_view_id" ref="myndo.subarea_search" />
+    <field name="view_id" ref="myndo.subarea_tree" />
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Click to add a subarea.</p>
+    </field>
+  </record>
+
+</odoo>

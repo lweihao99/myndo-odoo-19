@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.columns_structure_form" model="ir.ui.view">
+    <field name="name">myndo.columns_structure_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.columns_structure</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name" />
+          <field name="short_name" />
+          <field name="description" />
+          <field name="type" />
+          <field name="accept_null" widget="boolean_toggle" />
+        </group>
+
+        <notebook>
+          <page string="Rule association">
+            <group>
+              <field name="associated_rule_ids" widget="many2many_tags" readonly="1"
+                string="Linked Rules" />
+            </group>
+          </page>
+          <page string="Columns usage">
+            <group>
+              <separator string="Used in Subareas" />
+              <field name="subarea_usage_ids" readonly="1">
+                <list>
+                  <field name="subarea_id" />
+                  <field name="usage_type" widget="badge"
+                    decoration-info="usage_type == 'dimension'"
+                    decoration-success="usage_type == 'metric'"
+                    decoration-warning="usage_type == 'algorithm'" />
+                  <field name="decorator" />
+                  <field name="is_multiple" optional="hide" />
+                </list>
+              </field>
+            </group>
+            <group>
+              <separator string="Used in templates" />
+              <field name="set_template_usage_ids" readonly="1">
+                <list>
+                  <field name="template_id" />
+                  <field name="usage_type" widget="badge"
+                    decoration-info="usage_type == 'dimension'"
+                    decoration-success="usage_type == 'metric'"
+                    decoration-warning="usage_type == 'algorithm'" />
+                  <field name="decorator" />
+                  <field name="is_multiple" optional="hide" />
+                </list>
+              </field>
+            </group>
+          </page>
+          <page string="Related platform columns">
+            <!-- list of related platform column name -->
+            <group>
+              <field name="standardise_platforms_column_ids" readonly="1">
+                <list>
+                  <field name="platform_name_ref" ></field>
+                  <field name="original_column_name"></field>
+                  <field name="usage_type" widget="badge"
+                    decoration-info="usage_type == 'dimension'"
+                    decoration-success="usage_type == 'metric'"
+                    decoration-warning="usage_type == 'algorithm'" />
+                  <field name="decorator" />
+
+                </list>
+              </field>
+            </group>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.columns_structure_tree" model="ir.ui.view">
+    <field name="name">myndo.columns_structure_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.columns_structure</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="associated_rule_ids" widget="many2many_tags" readonly="1" string="Linked Rules" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.columns_structure_search" model="ir.ui.view">
+    <field name="name">myndo.columns_structure_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.columns_structure</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="name" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.columns_structure_action" model="ir.actions.act_window">
+    <field name="name">Columns</field>
+    <field name="res_model">myndo.columns_structure</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="search_view_id" ref="myndo.columns_structure_search" />
+    <field name="view_id" ref="myndo.columns_structure_tree" />
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Click to add a column.</p>
+    </field>
+  </record>
+
+</odoo>

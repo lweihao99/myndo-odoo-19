@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.deconcat_rules_form" model="ir.ui.view">
+    <field name="name">myndo.deconcat_rules_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.deconcat_rules</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name" />
+          <field name="description"/>
+          <field name="separator"/>
+          <field name="replace_spaces"/>
+          <field name="from_col"/>
+          <field name="management_fee_col"/>
+          <field name="reconciliation_std_columns" widget="many2many_tags" options="{'no_create': True}"/>
+        </group>
+
+        <group>          
+          <field name="include_jobnumber" widget="boolean_toggle"/>
+          <field name="include_client" widget="boolean_toggle"/>
+          <field name="include_purchase_order" widget="boolean_toggle"/>
+          <field name="include_brand" widget="boolean_toggle"/>
+          <field name="include_country" widget="boolean_toggle"/>
+          <field name="include_unicode" widget="boolean_toggle"/>
+        </group>
+        <notebook>
+          <page string="columns values">
+          <group>
+            <field name="cols_values">
+              <list string="Deconcat Rule Values">
+                <field name="column_id"/>
+                <field name="value"/>
+              </list>
+            </field>
+          </group>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.deconcat_rules_tree" model="ir.ui.view">
+    <field name="name">myndo.deconcat_rules_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.deconcat_rules</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="reconciliation_std_columns" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.deconcat_rules_search" model="ir.ui.view">
+    <field name="name">myndo.deconcat_rules_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.deconcat_rules</field>
+    <field name="arch" type="xml">
+      <search string="Columns">
+        <field name="name" />
+        <field name="reconciliation_std_columns" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.myndo_deconcat_rules_action" model="ir.actions.act_window">
+    <field name="name">Columns</field>
+		<field name="res_model">myndo.deconcat_rules</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.deconcat_rules_search"/>
+		<field name="view_id" ref="myndo.deconcat_rules_tree"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a column.</p>
+		</field>
+	</record>
+
+</odoo>
