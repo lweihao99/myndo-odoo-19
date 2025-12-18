@@ -1,1 +1,1 @@
-# myndo-odoo-18
+# myndo-odoo-19
