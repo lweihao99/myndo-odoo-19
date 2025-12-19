@@ -29,3 +29,5 @@ myndo_platform_column_usage,myndo.platform_column_usage,model_myndo_platform_col
 myndo_validator_items,myndo.validator_items,model_myndo_validator_items,base.group_user,1,1,1,1
 myndo_unicode_list,myndo.unicode_list,model_myndo_unicode_list,base.group_user,1,1,1,1
 
+myndo_downloader_template,myndo.downloader_template,model_myndo_downloader_template,base.group_user,1,1,1,1
+myndo_downloader_template_columns_usage,myndo.downloader_template_columns_usage,model_myndo_downloader_template_columns_usage,base.group_user,1,1,1,1

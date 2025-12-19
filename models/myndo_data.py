@@ -165,7 +165,7 @@ class myndo_deconcat_rule_value(models.Model):
                     }
                 }
 
-
+# set plan template model
 class myndo_set_plan_template(models.Model):
     _name = "myndo.set_plan_template"
     _description = "Myndo Set Template"
@@ -184,10 +184,41 @@ class myndo_set_plan_template(models.Model):
     flowchart_start_column = fields.One2many("myndo.set_template_columns_usage","template_id",string="Flowchart Start Column")
     
     
+# downloader template model
+class myndo_downloader_template(models.Model):
+    _name = "myndo.downloader_template"
+    _description = "Myndo Downloader Template"
+    name = fields.Char(string="Name", required=True)
+    description = fields.Text(string="Description")
+    template_type = fields.Selection([
+        ("basic setup", "Basic Setup"),
+        ("digital", "Digital"),
+        ("offline", "Offline"),
+        ("custom", "Custom")
+    ], string="Template Type", required=True)
+    rel_subarea = fields.Many2one("myndo.subarea", string="Subarea")
+    rel_client = fields.Many2one("myndo.client", string="Client")
+    required_columns = fields.One2many("myndo.downloader_template_columns_usage","template_id",string="Required Columns")
+    
+    
+# myndo cluster
+class myndo_cluster(models.Model):
+    _name = "myndo.cluster"
+    _description = "Myndo Cluster"
+    name = fields.Char(string="Name")
+    
+# validator items
+class myndo_cluster_validator_items(models.Model):
+    _name = "myndo.cluster_validator_items"
+    _description = "Myndo Cluster Validator Items"
+    cluster_id = fields.Many2one("myndo.cluster", string="Cluster")
+    validator_item = fields.One2many("myndo.validator_items", "cluster_validator_items_id", string="Validator Items")
+    
 class myndo_validator_items(models.Model):
     _name = "myndo.validator_items"
     _description = "Myndo Validator Items"
     column_id = fields.Many2one("myndo.columns_structure", string="Column")
+    cluster_validator_items_id = fields.Many2one("myndo.cluster_validator_items", string="Cluster Validator Items")
     accept_values = fields.Text(string="Accept Values")
     result_values = fields.Text(string="Result Values")
     area_id = fields.Many2many("myndo.area", "validator_items_area_rel", "validator_items_id", "area_id",string="Area")

@@ -33,6 +33,7 @@ class myndo_columns_structure(models.Model):
   set_template_usage_ids = fields.One2many('myndo.set_template_columns_usage','column_id',string='Used in Templates')
   standardise_platforms_column_ids = fields.One2many("myndo.platform_column_usage", "column_id", string="Amazon Standardise Platforms Columns")
   validator_items = fields.One2many("myndo.validator_items", "column_id", string="Validator Items")
+  downloader_template_usage_ids = fields.One2many("myndo.downloader_template_columns_usage", "column_id", string="Downloader Template Columns")
   
   @api.depends('rel_deconcat_rule', 'rel_deconcat_rule_value.deconcat_rule_id')
   def _compute_associated_rules(self):
@@ -92,6 +93,7 @@ class myndo_set_template_columns_usage(models.Model):
     _name = "myndo.set_template_columns_usage"
     _description = "Myndo Template Columns"
     _inherit = "myndo.column_usage"
+    _rec_name = "column_id"
     
     template_id = fields.Many2one("myndo.set_plan_template", string="Template", ondelete='cascade')
     column_id = fields.Many2one("myndo.columns_structure", string="Column", ondelete='cascade')
@@ -118,4 +120,11 @@ class myndo_platform_column_usage(models.Model):
     original_column_name = fields.Char(string="Original Platform Column Name",related='platform_id.platform_column_name',store=True,readonly=True)
     platform_name_ref = fields.Char(string="Platform Name",related='platform_id.platform_id.name',readonly=True)
     
-
+class myndo_downloader_template_columns_usage(models.Model):
+    _name = "myndo.downloader_template_columns_usage"
+    _description = "Myndo Template Columns"
+    _inherit = "myndo.column_usage"
+    _rec_name = "column_id"
+    
+    template_id = fields.Many2one("myndo.downloader_template", string="Template", ondelete='cascade')
+    column_id = fields.Many2one("myndo.columns_structure", string="Column", ondelete='cascade')

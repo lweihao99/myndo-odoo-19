@@ -38,8 +38,22 @@
               </field>
             </group>
             <group>
-              <separator string="Used in templates" />
+              <separator string="Used in plan templates" />
               <field name="set_template_usage_ids" readonly="1">
+                <list>
+                  <field name="template_id" />
+                  <field name="usage_type" widget="badge"
+                    decoration-info="usage_type == 'dimension'"
+                    decoration-success="usage_type == 'metric'"
+                    decoration-warning="usage_type == 'algorithm'" />
+                  <field name="decorator" />
+                  <field name="is_multiple" optional="hide" />
+                </list>
+              </field>
+            </group>
+            <group>
+              <separator string="Used in downloader templates" />
+              <field name="downloader_template_usage_ids" readonly="1">
                 <list>
                   <field name="template_id" />
                   <field name="usage_type" widget="badge"

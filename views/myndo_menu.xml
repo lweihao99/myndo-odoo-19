@@ -21,6 +21,7 @@
 			<menuitem sequence="5" id="myndo.myndo_set_template_submenu" name="Set plan template" parent="myndo.configuration_menu" action="myndo.myndo_set_template_action"/>
 			<menuitem sequence="5" id="myndo.myndo_platform_submenu" name="Set myndo platform" parent="myndo.configuration_menu" action="myndo.myndo_platform_action"/>
 			<menuitem sequence="5" id="myndo.myndo_unicode_list_submenu" name="Unicode list" parent="myndo.configuration_menu" action="myndo.unicode_list_action"/>
+			<menuitem sequence="5" id="myndo.myndo_downloader_template_submenu" name="Downloader template" parent="myndo.configuration_menu" action="myndo.myndo_downloader_template_action"/>
 
 			<!-- platforms -->
 		<menuitem sequence="1" id="myndo.amazon_ads_main_menu" name="Amazon api" parent="myndo.main_menu" />
