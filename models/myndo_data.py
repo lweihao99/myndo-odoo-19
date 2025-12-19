@@ -212,7 +212,7 @@ class myndo_planner_templates(models.Model):
 	is_template_archived=fields.Boolean("is template archived")
 	copy_of_plan_id=fields.Integer("copy of plan id")
 	convention_rule_id=fields.Integer("convention rule id")
-	json_data=fields.Text("data")
+	json_data=fields.Json("data")
 	type=fields.Selection(selection=[('basic', 'Basic setup'),('digital', 'Digital'),('offline', 'Offline'),('custom', 'Custom')],string="Scheda")
 	columns_totals=fields.Text("columns totals")
 class myndo_unicode_list(models.Model):
