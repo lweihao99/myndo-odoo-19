@@ -26,3 +26,6 @@ myndo_platform,myndo.platform,model_myndo_platform,base.group_user,1,1,1,1
 myndo_standardise_platforms_column,myndo.standardise_platforms_column,model_myndo_standardise_platforms_column,base.group_user,1,1,1,1
 myndo_platform_column_usage,myndo.platform_column_usage,model_myndo_platform_column_usage,base.group_user,1,1,1,1
 
+myndo_validator_items,myndo.validator_items,model_myndo_validator_items,base.group_user,1,1,1,1
+myndo_unicode_list,myndo.unicode_list,model_myndo_unicode_list,base.group_user,1,1,1,1
+

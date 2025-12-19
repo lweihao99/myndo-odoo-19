@@ -32,6 +32,7 @@ class myndo_columns_structure(models.Model):
   subarea_usage_ids = fields.One2many('myndo.subarea_column_usage','column_id',string='Used in Subareas')
   set_template_usage_ids = fields.One2many('myndo.set_template_columns_usage','column_id',string='Used in Templates')
   standardise_platforms_column_ids = fields.One2many("myndo.platform_column_usage", "column_id", string="Amazon Standardise Platforms Columns")
+  validator_items = fields.One2many("myndo.validator_items", "column_id", string="Validator Items")
   
   @api.depends('rel_deconcat_rule', 'rel_deconcat_rule_value.deconcat_rule_id')
   def _compute_associated_rules(self):

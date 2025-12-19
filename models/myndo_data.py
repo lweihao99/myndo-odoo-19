@@ -72,6 +72,7 @@ class myndo_area(models.Model):
     description = fields.Text(string="Description")
     required_columns = fields.Many2many("myndo.columns_structure","myndo_area_columns_rel","area_id","column_id",string="Required Columns")
     rel_subareas = fields.Many2many("myndo.subarea","area_subarea_rel","area_id","subarea_id",string="Related Subareas")
+    validator_items = fields.Many2many("myndo.validator_items", "validator_items_area_rel", "area_id", "validator_items_id",string="Validator Items")
 
 
 class myndo_subarea(models.Model):
@@ -181,3 +182,44 @@ class myndo_set_plan_template(models.Model):
     
     template_required_columns = fields.One2many("myndo.set_template_columns_usage","template_id",string="Required Columns")
     flowchart_start_column = fields.One2many("myndo.set_template_columns_usage","template_id",string="Flowchart Start Column")
+    
+    
+class myndo_validator_items(models.Model):
+    _name = "myndo.validator_items"
+    _description = "Myndo Validator Items"
+    column_id = fields.Many2one("myndo.columns_structure", string="Column")
+    accept_values = fields.Text(string="Accept Values")
+    result_values = fields.Text(string="Result Values")
+    area_id = fields.Many2many("myndo.area", "validator_items_area_rel", "validator_items_id", "area_id",string="Area")
+    
+#  save plan records db model
+class myndo_planner_templates(models.Model):
+	_name='myndo.planner_templates'
+	name=fields.Char("Name")
+	client=fields.Many2one("myndo.client", string="Client")
+	dashboard_user=fields.Many2one("myndo.user_structure", string="Dashboard user")
+	is_fixed_template=fields.Boolean("Fixed template")
+	definitive=fields.Boolean("definitive")
+	is_duplicate = fields.Boolean("is duplicate")
+	description=fields.Text("Description")
+	client_name=fields.Text("Description")
+	date_range=fields.Text("template period")
+	brand=fields.Text("Brand")
+	country=fields.Text("Country")
+	po_number=fields.Text("po number")
+	cluster_media=fields.Text("cluster media")
+	recurrent_plan=fields.Boolean("recurrent plan")
+	is_template_archived=fields.Boolean("is template archived")
+	copy_of_plan_id=fields.Integer("copy of plan id")
+	convention_rule_id=fields.Integer("convention rule id")
+	json_data=fields.Text("data")
+	type=fields.Selection(selection=[('basic', 'Basic setup'),('digital', 'Digital'),('offline', 'Offline'),('custom', 'Custom')],string="Scheda")
+	columns_totals=fields.Text("columns totals")
+class myndo_unicode_list(models.Model):
+    _name = "myndo.unicode_list"
+    _description = "Myndo Unicode List"
+    template_id=fields.Many2one('myndo.planner_templates',string='plan')
+    rel_rule_id=fields.Many2one('myndo.deconcat_rules',string='deconcat rule')
+    unicode=fields.Char(string='unicode')
+    naming_convention=fields.Char(string='naming convention')
+    

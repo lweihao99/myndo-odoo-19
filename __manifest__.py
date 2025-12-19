@@ -23,6 +23,8 @@
 		'views/myndo_set_template_view.xml',
 		'views/myndo_platform_view.xml',
 		'views/amazon_standardise_column_view.xml',
+		'views/validator_items.xml',
+		'views/unicode_list_view.xml',
         'views/myndo_menu.xml',
 		'security/ir.model.access.csv',
 	],

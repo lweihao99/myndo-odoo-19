@@ -12,6 +12,7 @@
 		<menuitem sequence="1" id="myndo.columns_menu" name="Columns" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.columns_submenu" name="Columns add" parent="myndo.columns_menu" action="myndo.columns_structure_action"/>
 
+			<!-- configuration menu -->
 		<menuitem sequence="1" id="myndo.configuration_menu" name="Configuration" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.myndo_user_submenu" name="Myndo user" parent="myndo.configuration_menu" action="myndo.myndo_user_action"/>
 			<menuitem sequence="5" id="myndo.myndo_area_submenu" name="Area" parent="myndo.configuration_menu" action="myndo.myndo_area_action"/>
@@ -19,11 +20,16 @@
 			<menuitem sequence="5" id="myndo.myndo_deconcat_rules_submenu" name="Deconcat rule" parent="myndo.configuration_menu" action="myndo.myndo_deconcat_rules_action"/>
 			<menuitem sequence="5" id="myndo.myndo_set_template_submenu" name="Set plan template" parent="myndo.configuration_menu" action="myndo.myndo_set_template_action"/>
 			<menuitem sequence="5" id="myndo.myndo_platform_submenu" name="Set myndo platform" parent="myndo.configuration_menu" action="myndo.myndo_platform_action"/>
+			<menuitem sequence="5" id="myndo.myndo_unicode_list_submenu" name="Unicode list" parent="myndo.configuration_menu" action="myndo.unicode_list_action"/>
 
 			<!-- platforms -->
 		<menuitem sequence="1" id="myndo.amazon_ads_main_menu" name="Amazon api" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.amazon_set_columns_submenu" name="Standardise columns" parent="myndo.amazon_ads_main_menu" action="myndo.amazon_set_columns_action"/>
 		<menuitem sequence="1" id="myndo.meta_ads_main_menu" name="Meta api" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.meta_set_columns_submenu" name="Standardise columns" parent="myndo.meta_ads_main_menu" action="myndo.meta_set_columns_action"/>
+
+			<!-- validator items -->
+		<menuitem sequence="1" id="myndo.validator_items_main_menu" name="Validator items" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.validator_items_submenu" name="Validator items" parent="myndo.validator_items_main_menu" action="myndo.validator_items_action"/>
 
 </odoo>

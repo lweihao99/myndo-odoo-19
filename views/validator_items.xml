@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.validator_items_form" model="ir.ui.view">
+    <field name="name">myndo.validator_items_form</field>		
+    <field eval="10" name="priority"/>
+    <field name="model">myndo.validator_items</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="column_id"/>
+          <field name="accept_values"/>
+          <field name="result_values"/>
+          <field name="area_id"/>
+        </group>
+	    </form>
+    </field>
+  </record>
+
+  <record id="myndo.validator_items_tree" model="ir.ui.view">
+    <field name="name">myndo.validator_items_tree</field>
+    <field eval="10" name="priority"/>
+    <field name="model">myndo.validator_items</field>		
+    <field name="arch" type="xml">
+      <list>
+        <field name="column_id"/>
+        <field name="accept_values"/>
+        <field name="result_values"/>
+        <field name="area_id"/>
+      </list>
+    </field>
+  </record>
+	<record id="myndo.validator_items_search" model="ir.ui.view">
+    <field name="name">myndo.validator_items_search</field>
+		<field eval="10" name="priority"/>
+    <field name="model">myndo.validator_items</field>		
+		<field name="arch" type="xml">
+      <search string="Validator items Search">
+        <field name="column_id" />
+        <field name="area_id"/>
+      </search>
+    </field>
+  </record>
+
+    <!-- validator items -->
+  <record id="myndo.validator_items_action" model="ir.actions.act_window"><field name="name">Validator items</field>
+		<field name="res_model">myndo.validator_items</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.validator_items_search"/>
+		<field name="view_id" ref="myndo.validator_items_tree"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a validator item.</p>
+		</field>
+	</record>
+
+</odoo>
