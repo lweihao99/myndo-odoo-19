@@ -8,7 +8,7 @@
     <field name="arch" type="xml">
       <form>
         <group>
-          <field name="column_id"/>
+          <field name="column_id" readonly="1"/>
           <field name="accept_values"/>
           <field name="result_values"/>
           <field name="area_id"/>

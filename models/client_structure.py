@@ -44,7 +44,8 @@ class myndo_client(models.Model):
   vat_number=fields.Char(string='VAT Number')
   divisions_ids=fields.One2many('myndo.divisions', 'client_id', string='Divisions')
   client_subarea=fields.Many2one("myndo.subarea", string="client subarea")
-  user_ids=fields.Many2many('myndo.user_structure','myndo_user_client_rel', 'client_id','user_id', string='Users')  
+  user_ids=fields.Many2many('myndo.user_structure','myndo_user_client_rel', 'client_id','user_id', string='Users')
+  cross_area_ids=fields.Many2many("myndo.cross_area","cross_area_client_rel","client_id","cross_area_id",string="Cross Areas")
   
 class myndo_brands(models.Model):
   _name = 'myndo.brands'

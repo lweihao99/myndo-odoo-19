@@ -73,7 +73,20 @@ class myndo_area(models.Model):
     required_columns = fields.Many2many("myndo.columns_structure","myndo_area_columns_rel","area_id","column_id",string="Required Columns")
     rel_subareas = fields.Many2many("myndo.subarea","area_subarea_rel","area_id","subarea_id",string="Related Subareas")
     validator_items = fields.Many2many("myndo.validator_items", "validator_items_area_rel", "area_id", "validator_items_id",string="Validator Items")
+    # rel_tag_colors = fields.Many2many("myndo.area_tag_color","area_tag_color_rel","area_id","tag_id",string="Related Tag Colors")
+    cross_area_ids = fields.One2many("myndo.cross_area","area_id",string="Cross Areas")
+    
+# class myndo_area_tag_color(models.Model):
+#     _name = "myndo.area_tag_color"
+#     _description = "Myndo Area Tag Color"
+#     name = fields.Char(string="Tag name", required=True)
+#     color = fields.Integer(string="Color", required=True,default=_default_color)
+#     active = fields.Boolean(string="Active", default=True)
+    
+#     rel_areas = fields.Many2many("myndo.area","area_tag_color_rel","tag_id","area_id",string="Related Areas")
 
+#     # def _default_color(self):
+#     #     return random.randint(1, 16777215)
 
 class myndo_subarea(models.Model):
     _name = "myndo.subarea"
@@ -91,12 +104,122 @@ class myndo_subarea(models.Model):
     only_common_cols = fields.Boolean("Solo colonne in comune", default=True)
     active = fields.Boolean("active", default=True)
 
-
+#  cross between 2 areas 
 class myndo_cross_area(models.Model):
     _name = "myndo.cross_area"
     _description = "Myndo Cross Area"
     name = fields.Char(string="Name", required=True)
     clean_name = fields.Char(string="Display Name", required=True)
+    clients_ids = fields.Many2many("myndo.client","cross_area_clients_rel","cross_area_id","client_id",string="Clients")
+    area_id = fields.Many2one("myndo.area", string="Area")
+    keep_only_matched_rows = fields.Boolean(string="Keep only matched rows", default=False)
+    operation_ids = fields.One2many("myndo.cross_area_operation", "cross_area_id", string="Operations")
+    final_col_ids = fields.One2many("myndo.cross_area_columns", "cross_area_id", string="Final Columns")
+    filter_ids = fields.Many2many("myndo.cross_area_operation_filter", "cross_area_filters_rel", "cross_area_id", "filter_id", string="Filters")
+    
+    # create final columns
+    def action_create_cols_combo(self):
+        self.ensure_one()
+        self.final_col_ids.unlink()
+        
+        new_cols = []
+        if self.area_id:
+            for col in self.area_id.required_columns:
+                new_cols.append({
+                    'cross_area_id': self.id,
+                    'area_id': self.area_id.id,
+                    'column_id': col.id
+                })
+        
+        for op in self.operation_ids:
+            if op.main_area_id:
+                for col in op.main_area_id.required_columns:
+                    new_cols.append({
+                        'cross_area_id': self.id,
+                        'area_id': op.main_area_id.id,
+                        'column_id': col.id
+                    })
+        
+        if new_cols:
+            self.env['myndo.cross_area_columns'].create(new_cols)
+
+
+class myndo_cross_area_operation(models.Model):
+    _name = "myndo.cross_area_operation"
+    _description = "Myndo Cross Area Operation"
+    name = fields.Char(string="Name", required=True)
+    cross_area_id = fields.Many2one("myndo.cross_area", string="Cross Area",ondelete='cascade')
+    main_area_id = fields.Many2one("myndo.area", string="Area to Merge")
+    only_matched = fields.Boolean(string="Keep only matched rows", default=True)
+    cols_to_match_ids = fields.Many2many("myndo.columns_structure", string="Merge based on columns")
+    filter_ids = fields.Many2many("myndo.cross_area_operation_filter", relation="myndo_cross_area_op_filters_rel", string="Operation Filters")
+    
+    cols_to_match_domain_ids = fields.Many2many("myndo.columns_structure", compute="_compute_cols_to_match_domain")
+    
+    @api.depends('main_area_id', 'cross_area_id.area_id')
+    def _compute_cols_to_match_domain(self):
+        fixed_cols = self.env['myndo.columns_structure'].search([
+            ('fixed_db_col', '=', True),
+            ('fixed_db_col_matchable_in_cross', '=', True)
+        ])
+        
+        for rec in self:
+            if not rec.cross_area_id or not rec.main_area_id:
+                rec.cols_to_match_domain_ids = fixed_cols
+                continue
+
+            area_a_cols = rec.cross_area_id.area_id.required_columns.ids
+            area_b_cols = rec.main_area_id.required_columns.ids
+            
+            common_col_ids = set(area_a_cols) & set(area_b_cols)
+            final_ids = list(common_col_ids | set(fixed_cols.ids))
+            rec.cols_to_match_domain_ids = [(6, 0, final_ids)]
+
+class myndo_cross_area_columns(models.Model):
+    _name = "myndo.cross_area_columns"
+    _description = "Myndo Cross Area Columns"
+    cross_area_id = fields.Many2one("myndo.cross_area", ondelete='cascade')
+    area_id = fields.Many2one("myndo.area", string="Source Area")
+    column_id = fields.Many2one("myndo.columns_structure", string="Column")
+    split_between_matches = fields.Boolean(string="Split between matches", default=True)
+    is_final_col = fields.Boolean(string="Is Final Column", default=True)
+    display_name = fields.Char(string="Display Name", compute='_compute_display_name')
+    
+    @api.depends('area_id', 'column_id')
+    def _compute_display_name(self):
+        for rec in self:
+            area_name = rec.area_id.name or '?'
+            col_name = rec.column_id.name or '?'
+            rec.display_name = f"{area_name} - {col_name}"
+    
+class myndo_cross_area_operation_filter(models.Model):
+    _name = "myndo.cross_area_operation_filter"
+    _description = "Myndo Cross Area Operation Filter"
+    
+    column_id = fields.Many2one("myndo.columns_structure", string="Column", required=True)
+    operator = fields.Selection([
+        ('less', 'Minore (<)'),
+        ('greater', 'Maggiore (>)'),
+        ('equal', 'Uguale (=)'),
+        ('notequal', 'Diverso (!=)'),
+        ('contain', 'Contiene'),
+        ('notcontain', 'Non contiene')
+    ], string="Operator", required=True)
+    val_float = fields.Float(string="Value (Numeric)", default=0.0)
+    val_char = fields.Char(string="Value (Text)", default="")
+    col_type = fields.Selection(related="column_id.type", string="Column Type", readonly=True)
+    display_name = fields.Char(string="Display Name", compute='_compute_display_name')
+    
+    @api.depends('column_id', 'operator', 'val_float', 'val_char')
+    def _compute_display_name(self):
+        for rec in self:
+            is_numeric = rec.col_type in ['float', 'int']
+            val = str(rec.val_float) if is_numeric else (rec.val_char or '')
+            
+            op_dict = dict(self._fields['operator'].selection)
+            op_label = op_dict.get(rec.operator, rec.operator)
+            
+            rec.display_name = f"{rec.column_id.name} {op_label} {val}"
 
 
 class myndo_deconcat_rules(models.Model):
@@ -217,6 +340,8 @@ class myndo_cluster_validator_items(models.Model):
 class myndo_validator_items(models.Model):
     _name = "myndo.validator_items"
     _description = "Myndo Validator Items"
+    _rec_name = 'accept_values'
+    name = fields.Char(string="Name")
     column_id = fields.Many2one("myndo.columns_structure", string="Column")
     cluster_validator_items_id = fields.Many2one("myndo.cluster_validator_items", string="Cluster Validator Items")
     accept_values = fields.Text(string="Accept Values")

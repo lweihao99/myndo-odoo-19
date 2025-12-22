@@ -16,6 +16,16 @@
         </group>
 
         <notebook>
+          <page string="Validator items">
+            <field name="validator_items">
+              <list editable="bottom">
+                <field name="column_id" readonly="1"/>
+                <field name="accept_values"/>
+                <field name="result_values"/>
+                <field name="area_id" widget="many2many_tags"/>
+              </list>
+            </field>
+          </page>
           <page string="Rule association">
             <group>
               <field name="associated_rule_ids" widget="many2many_tags" readonly="1"
