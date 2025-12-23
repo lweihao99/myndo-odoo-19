@@ -43,6 +43,17 @@
               </field>
             </group>
           </page>
+          <page string="Related Cross Areas">
+            <group>
+              <field name="rel_cross_area_ids">
+                <list string="Cross Areas">
+                  <field name="name" />
+                  <field name="clean_name" />
+                  <field name="final_col_ids" />
+                </list>
+              </field>
+            </group>
+          </page>
           <page string="Related Columns configuration">
             <field name="required_columns" nolabel="1">
               <list editable="bottom">

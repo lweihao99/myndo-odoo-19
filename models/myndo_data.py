@@ -103,6 +103,7 @@ class myndo_subarea(models.Model):
     show_origin = fields.Boolean("Mostra provenienza")
     only_common_cols = fields.Boolean("Solo colonne in comune", default=True)
     active = fields.Boolean("active", default=True)
+    rel_cross_area_ids = fields.One2many("myndo.cross_area","area_id",string="Cross Areas")
 
 #  cross between 2 areas 
 class myndo_cross_area(models.Model):
