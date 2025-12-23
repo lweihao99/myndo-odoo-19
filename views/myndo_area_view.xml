@@ -11,6 +11,7 @@
           <field name="name" />
           <field name="clean_name" />
           <field name="description" />
+          <field name="rel_tag_colors" widget="many2many_tags" options="{'color_field': 'color'}" />
         </group>
 
         <notebook>
@@ -37,6 +38,7 @@
       <list>
         <field name="name" />
         <field name="clean_name" />
+        <field name="rel_tag_colors" widget="many2many_tags" options="{'color_field': 'color'}"/>
         <field name="required_columns" widget="many2many_tags" context="{'default_area_id' : id}" />
       </list>
     </field>

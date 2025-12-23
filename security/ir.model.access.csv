@@ -35,6 +35,7 @@ myndo_downloader_template_columns_usage,myndo.downloader_template_columns_usage,
 myndo_cross_area_columns,myndo.cross_area_columns,model_myndo_cross_area_columns,base.group_user,1,1,1,1
 myndo_cross_area_operation_filter,myndo.cross_area_operation_filter,model_myndo_cross_area_operation_filter,base.group_user,1,1,1,1
 myndo_cross_area_operation,myndo.cross_area_operation,model_myndo_cross_area_operation,base.group_user,1,1,1,1
+myndo_area_tag_color,myndo.area_tag_color,model_myndo_area_tag_color,base.group_user,1,1,1,1
 
 
 

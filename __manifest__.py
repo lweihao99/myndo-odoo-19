@@ -27,6 +27,7 @@
 		'views/unicode_list_view.xml',
 		'views/downloader_template_view.xml',
 		'views/cross_area_view.xml',
+		'views/area_tag_color_view.xml',
         'views/myndo_menu.xml',
 		'security/ir.model.access.csv',
 	],

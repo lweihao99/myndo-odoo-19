@@ -73,20 +73,17 @@ class myndo_area(models.Model):
     required_columns = fields.Many2many("myndo.columns_structure","myndo_area_columns_rel","area_id","column_id",string="Required Columns")
     rel_subareas = fields.Many2many("myndo.subarea","area_subarea_rel","area_id","subarea_id",string="Related Subareas")
     validator_items = fields.Many2many("myndo.validator_items", "validator_items_area_rel", "area_id", "validator_items_id",string="Validator Items")
-    # rel_tag_colors = fields.Many2many("myndo.area_tag_color","area_tag_color_rel","area_id","tag_id",string="Related Tag Colors")
+    rel_tag_colors = fields.Many2many("myndo.area_tag_color","area_tag_color_rel","area_id","tag_id",string="Related Tag Colors")
     cross_area_ids = fields.One2many("myndo.cross_area","area_id",string="Cross Areas")
     
-# class myndo_area_tag_color(models.Model):
-#     _name = "myndo.area_tag_color"
-#     _description = "Myndo Area Tag Color"
-#     name = fields.Char(string="Tag name", required=True)
-#     color = fields.Integer(string="Color", required=True,default=_default_color)
-#     active = fields.Boolean(string="Active", default=True)
+class myndo_area_tag_color(models.Model):
+    _name = "myndo.area_tag_color"
+    _description = "Myndo Area Tag Color"
+    name = fields.Char(string="Tag name", required=True)
+    color = fields.Integer(string="Color", required=True, default=lambda self: random.randint(1, 11))
+    active = fields.Boolean(string="Active", default=True)
     
-#     rel_areas = fields.Many2many("myndo.area","area_tag_color_rel","tag_id","area_id",string="Related Areas")
-
-#     # def _default_color(self):
-#     #     return random.randint(1, 16777215)
+    rel_areas = fields.Many2many("myndo.area","area_tag_color_rel","tag_id","area_id",string="Related Areas")
 
 class myndo_subarea(models.Model):
     _name = "myndo.subarea"

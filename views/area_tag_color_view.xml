@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.area_tag_color_form" model="ir.ui.view">
+    <field name="name">myndo.area_tag_color_form</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.area_tag_color</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name" />
+          <field name="color" widget="color_picker"/>
+          <field name="active" />
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="myndo.area_tag_color_tree" model="ir.ui.view">
+    <field name="name">myndo.area_tag_color_tree</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.area_tag_color</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name" />
+        <field name="color" widget="color_picker" />
+        <field name="active" />
+      </list>
+    </field>
+  </record>
+  <record id="myndo.area_tag_color_search" model="ir.ui.view">
+    <field name="name">myndo.area_tag_color_search</field>
+    <field eval="10" name="priority" />
+    <field name="model">myndo.area_tag_color</field>
+    <field name="arch" type="xml">
+      <search string="Area Tag Color">
+        <field name="name" />
+        <field name="color" />
+      </search>
+    </field>
+  </record>
+
+  <!-- columns -->
+  <record id="myndo.myndo_area_tag_color_action" model="ir.actions.act_window">
+    <field name="name">Area Tag Color</field>
+		<field name="res_model">myndo.area_tag_color</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.area_tag_color_search"/>
+		<field name="view_id" ref="myndo.area_tag_color_tree"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a Area Tag Color.</p>
+		</field>
+	</record>
+
+</odoo>
