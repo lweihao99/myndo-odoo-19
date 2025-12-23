@@ -178,6 +178,7 @@ class myndo_cross_area_operation(models.Model):
 class myndo_cross_area_columns(models.Model):
     _name = "myndo.cross_area_columns"
     _description = "Myndo Cross Area Columns"
+    _rec_name = 'display_name'
     cross_area_id = fields.Many2one("myndo.cross_area", ondelete='cascade')
     area_id = fields.Many2one("myndo.area", string="Source Area")
     column_id = fields.Many2one("myndo.columns_structure", string="Column")
@@ -195,6 +196,7 @@ class myndo_cross_area_columns(models.Model):
 class myndo_cross_area_operation_filter(models.Model):
     _name = "myndo.cross_area_operation_filter"
     _description = "Myndo Cross Area Operation Filter"
+    _rec_name = 'display_name'
     
     column_id = fields.Many2one("myndo.columns_structure", string="Column", required=True)
     operator = fields.Selection([

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="myndo.cross_area_form" model="ir.ui.view">
+    <field name="name">myndo.cross_area_form</field>		
+    <field eval="10" name="priority"/>
+    <field name="model">myndo.cross_area</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name"/>
+          <field name="clean_name"/>
+          <field name="clients_ids"/>
+          <field name="area_id"/>
+          <field name="keep_only_matched_rows"/>
+          <field name="operation_ids"/>
+          <field name="final_col_ids"/>
+          <field name="filter_ids"/>
+        </group>
+	    </form>
+    </field>
+  </record>
+
+  <record id="myndo.cross_area_tree" model="ir.ui.view">
+    <field name="name">myndo.cross_area_tree</field>
+    <field eval="10" name="priority"/>
+    <field name="model">myndo.cross_area</field>		
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="clean_name"/>
+        <field name="clients_ids"/>
+        <field name="area_id"/>
+        <field name="keep_only_matched_rows"/>
+        <field name="operation_ids"/>
+        <field name="final_col_ids"/>
+        <field name="filter_ids"/>
+      </list>
+    </field>
+  </record>
+	<record id="myndo.cross_area_search" model="ir.ui.view">
+    <field name="name">myndo.cross_area_search</field>
+		<field eval="10" name="priority"/>
+    <field name="model">myndo.cross_area</field>		
+		<field name="arch" type="xml">
+      <search string="Cross Area Search">
+        <field name="name" />
+        <field name="clean_name"/>
+      </search>
+    </field>
+  </record>
+
+    <!-- validator items -->
+  <record id="myndo.cross_area_action" model="ir.actions.act_window">
+    <field name="name">Cross Area</field>
+		<field name="res_model">myndo.cross_area</field>	
+		<field name="view_mode">list,kanban,form</field>		
+		<field name="search_view_id" ref="myndo.cross_area_search"/>
+		<field name="view_id" ref="myndo.cross_area_tree"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">Click to add a cross area.</p>
+		</field>
+	</record>
+
+</odoo>
