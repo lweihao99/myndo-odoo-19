@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-  <data noupdate="1">
-    <record id="platform_amazon_ref" model="myndo.platform">
-        <field name="name">Amazon</field>
-    </record>
-
-    <record id="platform_meta_ref" model="myndo.platform">
-        <field name="name">Meta</field>
-    </record>
-  </data>
-
   <record id="myndo.standardise_platforms_column_form" model="ir.ui.view">
     <field name="name">myndo.standardise_platforms_column_form</field>
     <field eval="10" name="priority" />
@@ -64,32 +53,16 @@
     </field>
   </record>
 
-  <record id="myndo.amazon_set_columns_action" model="ir.actions.act_window">
-    <field name="name">Platform column</field>
-		<field name="res_model">myndo.standardise_platforms_column</field>	
-		<field name="view_mode">list,kanban,form</field>		
-		<field name="search_view_id" ref="myndo.standardise_platforms_column_search"/>
-		<field name="view_id" ref="myndo.standardise_platforms_column_tree"/>
-    <!-- show data only for amazon -->
-    <field name="domain" eval="[('platform_id', '=', ref('platform_amazon_ref'))]"></field>
-    <field name="context" eval="{'default_platform_id': ref('platform_amazon_ref')}"></field>
-		<field name="help" type="html">
-		  <p class="oe_view_nocontent_create">Click to add a platform column.</p>
-		</field>
-	</record>
-
-  <record id="myndo.meta_set_columns_action" model="ir.actions.act_window">
-    <field name="name">Platform column</field>
-		<field name="res_model">myndo.standardise_platforms_column</field>	
-		<field name="view_mode">list,kanban,form</field>		
-		<field name="search_view_id" ref="myndo.standardise_platforms_column_search"/>
-		<field name="view_id" ref="myndo.standardise_platforms_column_tree"/>
-    <!-- show data only for meta -->
-    <field name="domain" eval="[('platform_id', '=', ref('platform_meta_ref'))]"></field>
-    <field name="context" eval="{'default_platform_id': ref('platform_meta_ref')}"></field>
-		<field name="help" type="html">
-		  <p class="oe_view_nocontent_create">Click to add a platform column.</p>
-		</field>
-	</record>
+  <record id="myndo.standardise_columns_all_action" model="ir.actions.act_window">
+    <field name="name">Standardise Columns</field>
+    <field name="res_model">myndo.standardise_platforms_column</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="context">{'group_by': 'platform_id'}</field>
+    <field name="search_view_id" ref="myndo.standardise_platforms_column_search"/>
+    <field name="view_id" ref="myndo.standardise_platforms_column_tree"/>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Click to add a platform column.</p>
+    </field>
+  </record>
 
 </odoo>

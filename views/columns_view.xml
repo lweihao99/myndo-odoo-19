@@ -12,6 +12,7 @@
           <field name="short_name" />
           <field name="description" />
           <field name="type" />
+          <field name="base_type" />
           <field name="accept_null" widget="boolean_toggle" />
         </group>
 
@@ -105,6 +106,8 @@
     <field name="arch" type="xml">
       <list>
         <field name="name" />
+        <field name="base_type" optional="show"/>
+        <field name="connected_platforms" optional="show"/>
         <field name="associated_rule_ids" widget="many2many_tags" readonly="1" string="Linked Rules" />
       </list>
     </field>
@@ -116,6 +119,8 @@
     <field name="arch" type="xml">
       <search string="Columns">
         <field name="name" />
+        <field name="connected_platforms" />
+        <filter string="Connected Platforms" name="group_by_connected_platforms" context="{'group_by': 'connected_platforms'}"/>
       </search>
     </field>
   </record>

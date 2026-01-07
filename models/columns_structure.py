@@ -25,13 +25,19 @@ class myndo_columns_structure(models.Model):
     ('boolean', 'Boolean'),
   ], string='Data Type', required=True)
   accept_null=fields.Boolean(string='Accept Null Value', default=True)
+  base_type=fields.Selection([
+    ('dimension', 'Dimension'),
+    ('metric', 'Metric'),
+    ('algorithm', 'Algorithm'),
+  ], string='Base Type', required=True)
+  
   rel_areas=fields.Many2many('myndo.subarea','columns_structure_area_rel','column_id','area_id', string='Related Areas')
   rel_deconcat_rule_value=fields.One2many('myndo.deconcat_rule_value','column_id', string='Related Deconcat Rule Values')
   rel_deconcat_rule=fields.Many2one('myndo.deconcat_rules', string='Related Deconcat Rule')
   associated_rule_ids = fields.Many2many('myndo.deconcat_rules',compute='_compute_associated_rules',string='Associated Deconcat Rules',store=False)
   subarea_usage_ids = fields.One2many('myndo.subarea_column_usage','column_id',string='Used in Subareas')
   set_template_usage_ids = fields.One2many('myndo.set_template_columns_usage','column_id',string='Used in Templates')
-  standardise_platforms_column_ids = fields.One2many("myndo.platform_column_usage", "column_id", string="Amazon Standardise Platforms Columns")
+  standardise_platforms_column_ids = fields.One2many("myndo.platform_column_usage", "column_id", string="Related Platforms Columns")
   validator_items = fields.One2many('myndo.validator_items', 'column_id', string='Validator Items')
   downloader_template_usage_ids = fields.One2many("myndo.downloader_template_columns_usage", "column_id", string="Downloader Template Columns")
   active = fields.Boolean(default=True)
@@ -39,6 +45,14 @@ class myndo_columns_structure(models.Model):
   fixed_db_col_matchable_in_cross = fields.Boolean(string="Matchable in Cross Area", help="If true, this column can be used as a join key in cross-area operations.")
   cross_column_usage_ids = fields.One2many("myndo.cross_area_columns", "column_id", string="Cross Area Usages")
   
+  connected_platforms = fields.Char(string="Connected Platforms", compute="_compute_connected_platforms", store=True)
+
+  @api.depends("standardise_platforms_column_ids.platform_name_ref")
+  def _compute_connected_platforms(self):
+      for rec in self:
+          names = rec.standardise_platforms_column_ids.mapped("platform_name_ref")
+          rec.connected_platforms = ", ".join(list(set([n for n in names if n])))
+
   @api.depends('rel_deconcat_rule', 'rel_deconcat_rule_value.deconcat_rule_id')
   def _compute_associated_rules(self):
         for record in self:
