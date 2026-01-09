@@ -45,6 +45,7 @@ class myndo_columns_structure(models.Model):
   fixed_db_col_matchable_in_cross = fields.Boolean(string="Matchable in Cross Area", help="If true, this column can be used as a join key in cross-area operations.")
   cross_column_usage_ids = fields.One2many("myndo.cross_area_columns", "column_id", string="Cross Area Usages")
   
+  js_code = fields.Text(string="Default JS Code")
   connected_platforms = fields.Char(string="Connected Platforms", compute="_compute_connected_platforms", store=True)
 
   @api.depends("standardise_platforms_column_ids.platform_name_ref")
@@ -85,6 +86,11 @@ class myndo_column_usage(models.Model):
   is_multiple=fields.Boolean(string='Is Multi in Plan', default=False)
   hide_total=fields.Boolean(string='Hide Total', default=False)
   
+  @api.onchange('column_id')
+  def _onchange_column_id(self):
+      if self.column_id and self.column_id.js_code and not self.js_code:
+          self.js_code = self.column_id.js_code
+
   def action_edit_algorithm(self):
         """ open window to edit js code """
         self.ensure_one()

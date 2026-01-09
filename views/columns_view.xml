@@ -94,6 +94,9 @@
               </field>
             </group>
           </page>
+          <page string="Default Algorithm">
+             <field name="js_code" widget="ace" />
+          </page>
         </notebook>
       </form>
     </field>
