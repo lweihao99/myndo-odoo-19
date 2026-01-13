@@ -10,14 +10,12 @@
                 <group>
                     <field name="name"/>
                     <field name="area_id"/>
+                    <field name="description"/>
                 </group>
                 <notebook>
                     <page string="JSON Preview">
                         <button name="action_generate_preview" string="Generate JSON Structure" type="object" class="oe_highlight"/>
                         <field name="generated_json" widget="ace" options="{'mode': 'json'}"/>
-                    </page>
-                    <page string="Description">
-                        <field name="description"/>
                     </page>
                 </notebook>
             </sheet>
