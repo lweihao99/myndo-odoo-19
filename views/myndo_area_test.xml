@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+  <record id="view_myndo_area_test_form" model="ir.ui.view">
+    <field name="name">myndo.area_test_form</field>
+    <field name="model">myndo.area_test</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="area_id"/>
+                </group>
+                <notebook>
+                    <page string="JSON Preview">
+                        <button name="action_generate_preview" string="Generate JSON Structure" type="object" class="oe_highlight"/>
+                        <field name="generated_json" widget="ace" options="{'mode': 'json'}"/>
+                    </page>
+                    <page string="Description">
+                        <field name="description"/>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+  </record>
+
 	<record id="myndo.area_test_tree" model="ir.ui.view">
     <field name="name">myndo.area_test_tree</field>
     <field eval="10" name="priority" />

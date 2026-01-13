@@ -92,6 +92,39 @@ class myndo_area_test(models.Model):
     name = fields.Char(string="Name")
     clean_name = fields.Char(string="Display Name")
     description = fields.Text(string="Description")
+    
+    area_id = fields.Many2one("myndo.area", string="Select Area to Test")
+    generated_json = fields.Text(string="Generated JSON Preview", readonly=True)
+    
+    def action_generate_preview(self):
+        """create json preview"""
+        self.ensure_one()
+        if not self.area_id:
+            raise UserError("Please select an Area first.")
+
+        # mockup data
+        preview_data = []
+        row = {}
+        
+        for col in self.area_id.required_columns:
+            val = ""
+            if col.type == 'int': val = 0
+            elif col.type == 'float': val = 0.0
+            elif col.type == 'percent': val = "0%"
+            elif col.type == 'date': val = date.today().strftime('%Y-%m-%d')
+            
+            row[col.name] = val
+
+        preview_data.append(row)
+        
+        self.generated_json = json.dumps(
+            {
+                "area_name": self.area_id.name,
+                "column_count": len(self.area_id.required_columns),
+                "sample_data": preview_data
+            }, 
+            indent=4
+        )
 
 class myndo_subarea(models.Model):
     _name = "myndo.subarea"
@@ -109,6 +142,36 @@ class myndo_subarea(models.Model):
     only_common_cols = fields.Boolean("Solo colonne in comune", default=True)
     active = fields.Boolean("active", default=True)
     rel_cross_area_ids = fields.One2many("myndo.cross_area","area_id",string="Cross Areas")
+    
+    # available_column_ids = fields.Many2many('myndo.columns_structure', compute="_compute_available_columns")
+    
+    # @api.depends('rel_areas', 'only_common_cols')
+    # def _compute_available_columns(self):
+    #     for rec in self:
+    #         if not rec.rel_areas:
+    #             rec.available_column_ids = self.env['myndo.columns_structure'].search([]).ids
+    #             continue
+            
+    #         # get all related area columns
+    #         column_sets = [set(area.required_columns.ids) for area in rec.rel_areas]
+            
+    #         if rec.only_common_cols:
+    #             # take intersection: must exist in all areas
+    #             common_ids = set.intersection(*column_sets) if column_sets else set()
+    #         else:
+    #             # take union: must exist in any area
+    #             common_ids = set.union(*column_sets) if column_sets else set()
+            
+    #         rec.available_column_ids = [(6, 0, list(common_ids))]
+            
+    # @api.constrains('required_columns', 'rel_areas', 'only_common_cols')
+    # def _check_subarea_columns(self):
+    #     for rec in self:
+    #         if rec.only_common_cols and rec.rel_areas:
+    #             allowed_ids = rec.available_column_ids.ids
+    #             for usage in rec.required_columns:
+    #                 if usage.column_id.id not in allowed_ids:
+    #                     raise UserError(_("La colonna '%s' non è presente in tutte le aree collegate.") % usage.column_id.name)
 
 #  cross between 2 areas 
 class myndo_cross_area(models.Model):

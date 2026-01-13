@@ -60,6 +60,41 @@ class myndo_columns_structure(models.Model):
             mapped_rules = record.rel_deconcat_rule_value.mapped('deconcat_rule_id')
             record.associated_rule_ids = mapped_rules
             
+  def _clean_column_name(self, name):
+        if not name:
+            return ""
+        # col name clean rule
+        name = re.sub(r'[{}\|<>\!\"£$%&/()=\?\'\^|*+\[\]§°@\.;:\-]', ' ', name)
+        name = name.replace('\t', ' ').replace('\r', ' ').replace('\n', ' ').replace(',', '')
+        name = re.sub(r'[ ]+', ' ', name)
+        return name.lower().strip()
+  
+  # @api.model_create_multi
+  #   def create(self, vals_list):
+  #       for vals in vals_list:
+  #           if 'name' in vals:
+  #               vals['name'] = self._clean_column_name(vals['name'])
+  #               # check uniqueness
+  #               existing = self.search([('name', '=', vals['name'])])
+  #               if existing:
+  #                   raise UserError(_("Il nome '%s' è già presente in un'altra colonna.") % vals['name'])
+  #       return super(myndo_columns_structure, self).create(vals_list)
+    
+  # def write(self, vals):
+  #     if 'name' in vals:
+  #         vals['name'] = self._clean_column_name(vals['name'])
+  #         # check uniqueness
+  #         for rec in self:
+  #             existing = self.search([('name', '=', vals['name']), ('id', '!=', rec.id)])
+  #             if existing:
+  #                 raise UserError(_("Il nome '%s' è già presente in un'altra colonna.") % vals['name'])
+  #     return super(myndo_columns_structure, self).write(vals)
+
+  # @api.onchange('name')
+  # def _onchange_name_clean(self):
+  #     if self.name:
+  #         self.name = self._clean_column_name(self.name)
+            
 class myndo_column_usage(models.Model):
   _name = "myndo.column_usage"
   _description = "Myndo Column Usage"

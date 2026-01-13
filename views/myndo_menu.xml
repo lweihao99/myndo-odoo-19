@@ -27,10 +27,14 @@
 			<menuitem sequence="5" id="myndo.myndo_cross_area_submenu" name="Cross area" parent="myndo.configuration_menu" action="myndo.cross_area_action"/>
 			<menuitem sequence="5" id="myndo.standardise_columns_submenu" name="Standardise Columns" parent="myndo.configuration_menu" action="myndo.standardise_columns_all_action"/>
 
-
-
-			<!-- validator items -->
+		<!-- validator items -->
 		<menuitem sequence="1" id="myndo.validator_items_main_menu" name="Validator items" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.validator_items_submenu" name="Validator items" parent="myndo.validator_items_main_menu" action="myndo.validator_items_action"/>
+
+		<!-- platforms main menu -->
+		<menuitem sequence="1" id="myndo.platforms_menu" name="Platforms" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.platforms_amazon_menu" name="Amazon" parent="myndo.platforms_menu" />
+			<menuitem sequence="10" id="myndo.platforms_meta_menu" name="Meta" parent="myndo.platforms_menu" />
+			<menuitem sequence="15" id="myndo.platforms_google_menu" name="Google" parent="myndo.platforms_menu" />
 
 </odoo>
