@@ -16,6 +16,7 @@
 		<menuitem sequence="1" id="myndo.configuration_menu" name="Configuration" parent="myndo.main_menu" />
 			<menuitem sequence="5" id="myndo.myndo_user_submenu" name="Myndo user" parent="myndo.configuration_menu" action="myndo.myndo_user_action"/>
 			<menuitem sequence="5" id="myndo.myndo_area_submenu" name="Area" parent="myndo.configuration_menu" action="myndo.myndo_area_action"/>
+			<menuitem sequence="5" id="myndo.myndo_area_test_submenu" name="Area test" parent="myndo.configuration_menu" action="myndo.myndo_area_test_action"/>
 			<menuitem sequence="5" id="myndo.myndo_area_tag_color_submenu" name="Area tag color" parent="myndo.configuration_menu" action="myndo.myndo_area_tag_color_action"/>
 			<menuitem sequence="5" id="myndo.myndo_subarea_submenu" name="Subarea" parent="myndo.configuration_menu" action="myndo.myndo_subarea_action"/>
 			<menuitem sequence="5" id="myndo.myndo_deconcat_rules_submenu" name="Deconcat rule" parent="myndo.configuration_menu" action="myndo.myndo_deconcat_rules_action"/>

@@ -84,6 +84,14 @@ class myndo_area_tag_color(models.Model):
     active = fields.Boolean(string="Active", default=True)
     
     rel_areas = fields.Many2many("myndo.area","area_tag_color_rel","tag_id","area_id",string="Related Areas")
+    
+# area test
+class myndo_area_test(models.Model):
+    _name = "myndo.area_test"
+    _description = "Myndo Area Test"
+    name = fields.Char(string="Name")
+    clean_name = fields.Char(string="Display Name")
+    description = fields.Text(string="Description")
 
 class myndo_subarea(models.Model):
     _name = "myndo.subarea"

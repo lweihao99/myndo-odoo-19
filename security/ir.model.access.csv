@@ -8,6 +8,7 @@ myndo_divisions,myndo.divisions,model_myndo_divisions,base.group_user,1,1,1,1
 myndo_brands,myndo.brands,model_myndo_brands,base.group_user,1,1,1,1
 
 myndo_area,myndo.area,model_myndo_area,base.group_user,1,1,1,1
+myndo_area_test,myndo.area_test,model_myndo_area_test,base.group_user,1,1,1,1
 myndo_subarea,myndo.subarea,model_myndo_subarea,base.group_user,1,1,1,1
 myndo_cross_area,myndo.cross_area,model_myndo_cross_area,base.group_user,1,1,1,1
 myndo_user_structure,myndo.user_structure,model_myndo_user_structure,base.group_user,1,1,1,1
