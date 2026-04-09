@@ -11,17 +11,19 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: HOST
+      - key: DB_HOST
         fromDatabase:
           name: myndo-db
           property: host
-      - key: USER
+      - key: DB_USER
         fromDatabase:
           name: myndo-db
           property: user
-      - key: PASSWORD
+      - key: DB_PASSWORD
         fromDatabase:
           name: myndo-db
           property: password
-      - key: PORT
-        value: 8069
+      - key: DB_NAME
+        fromDatabase:
+          name: myndo-db
+          property: database
