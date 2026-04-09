@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
 
-# Render provides PORT env var (default 10000)
-# DB connection via DB_* env vars to avoid conflicts with system vars
+# Unset Railway/Postgres env vars that Odoo 19 auto-reads and fails to parse
+unset PGPORT PGHOST PGUSER PGPASSWORD PGDATABASE PGDATA
+unset DATABASE_URL DATABASE_PUBLIC_URL
+unset POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD
+
+# Start Odoo with explicit DB connection parameters
 exec odoo \
     --config=/etc/odoo/odoo.conf \
     --db_host="${DB_HOST}" \
