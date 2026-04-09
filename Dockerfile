@@ -10,6 +10,9 @@ RUN chown -R odoo:odoo /mnt/extra-addons/myndo
 COPY odoo.conf /etc/odoo/odoo.conf
 RUN chown odoo:odoo /etc/odoo/odoo.conf
 
+# Patch: allow 'postgres' db user (Railway free tier only provides this user)
+RUN sed -i "s/if config\['db_user'\] == 'postgres':/if False:/" /usr/lib/python3/dist-packages/odoo/service/server.py
+
 # Create entrypoint script that injects DB env vars
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
