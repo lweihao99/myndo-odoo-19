@@ -1,12 +1,18 @@
 #!/bin/bash
 set -e
 
-# Unset Railway/Postgres env vars that Odoo 19 auto-reads
-unset PGPORT PGHOST PGUSER PGPASSWORD PGDATABASE PGDATA
-unset DATABASE_URL DATABASE_PUBLIC_URL
-unset POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD
+# Set PG env vars to our DB_* values (Odoo reads these directly)
+export PGHOST="${DB_HOST}"
+export PGPORT="5432"
+export PGUSER="${DB_USER}"
+export PGPASSWORD="${DB_PASSWORD}"
+export PGDATABASE="${DB_NAME}"
 
-# Start Odoo directly with postgres user, bypassing docker-entrypoint.sh check
+# Unset vars that could cause parsing issues
+unset DATABASE_URL DATABASE_PUBLIC_URL
+unset POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD PGDATA
+
+# Start Odoo
 exec python3 /usr/bin/odoo \
     --config=/etc/odoo/odoo.conf \
     --db_host="${DB_HOST}" \
