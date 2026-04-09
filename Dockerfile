@@ -10,6 +10,9 @@ RUN chown -R odoo:odoo /mnt/extra-addons/myndo
 COPY odoo.conf /etc/odoo/odoo.conf
 RUN chown odoo:odoo /etc/odoo/odoo.conf
 
+# Patch: disable postgres user check in Odoo source
+RUN sed -i "s/if (config\['db_user'\] or os.environ.get('PGUSER')) == 'postgres':/if False:/" /usr/lib/python3/dist-packages/odoo/cli/server.py
+
 # Create entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
