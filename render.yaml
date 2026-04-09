@@ -1,0 +1,31 @@
+databases:
+  - name: myndo-db
+    plan: free
+    databaseName: myndo
+    user: odoo
+
+services:
+  - type: web
+    name: myndo-odoo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: HOST
+        fromDatabase:
+          name: myndo-db
+          property: host
+      - key: USER
+        fromDatabase:
+          name: myndo-db
+          property: user
+      - key: PASSWORD
+        fromDatabase:
+          name: myndo-db
+          property: password
+      - key: PORT
+        value: 8069
+    disk:
+      name: odoo-data
+      mountPath: /var/lib/odoo
+      sizeGB: 1
