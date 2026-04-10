@@ -24,7 +24,12 @@ if [ "$MYNDO_INSTALLED" != "installed" ]; then
         --stop-after-init \
         --no-http 2>&1 || echo "=== Init finished ==="
 else
-    echo "=== Myndo already installed, skipping init ==="
+    echo "=== Updating myndo module (ONE-TIME for mail dep) ==="
+    python3 /usr/bin/odoo \
+        --config=/etc/odoo/odoo.conf \
+        -i mail -u myndo \
+        --stop-after-init \
+        --no-http 2>&1 || echo "=== Update finished ==="
 fi
 
 # Start Odoo normally
