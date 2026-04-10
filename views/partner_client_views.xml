@@ -205,14 +205,13 @@
                 <separator/>
                 <filter name="my_archives" string="My Archives"
                         domain="[('dashboard_user_id','=',uid)]"/>
-                <group expand="0" string="Group By">
-                    <filter name="group_status" string="Status"
-                            context="{'group_by': 'status'}"/>
-                    <filter name="group_industry" string="Industry"
-                            context="{'group_by': 'industry_id'}"/>
-                    <filter name="group_owner" string="Owner"
-                            context="{'group_by': 'dashboard_user_id'}"/>
-                </group>
+                <separator/>
+                <filter name="group_status" string="Status"
+                        context="{'group_by': 'status'}"/>
+                <filter name="group_industry" string="Industry"
+                        context="{'group_by': 'industry_id'}"/>
+                <filter name="group_owner" string="Owner"
+                        context="{'group_by': 'dashboard_user_id'}"/>
             </search>
         </field>
     </record>

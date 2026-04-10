@@ -181,11 +181,10 @@
                 <filter name="aggregated" string="Aggregated Sourcing" domain="[('sourcing_type','=','aggregated')]"/>
                 <separator/>
                 <filter name="my_archives" string="My Archives" domain="[('dashboard_user_id','=',uid)]"/>
-                <group expand="0" string="Group By">
-                    <filter name="group_agency" string="Agency" context="{'group_by': 'agency_id'}"/>
-                    <filter name="group_type" string="Supplier Type" context="{'group_by': 'supplier_type'}"/>
-                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
-                </group>
+                <separator/>
+                <filter name="group_agency" string="Agency" context="{'group_by': 'agency_id'}"/>
+                <filter name="group_type" string="Supplier Type" context="{'group_by': 'supplier_type'}"/>
+                <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
             </search>
         </field>
     </record>
@@ -280,11 +279,10 @@
                 <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
                 <filter name="active" string="Active" domain="[('state','=','active')]"/>
                 <filter name="expired" string="Expired" domain="[('state','=','expired')]"/>
-                <group expand="0" string="Group By">
-                    <filter name="group_supplier" string="Supplier" context="{'group_by': 'supplier_id'}"/>
-                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
-                    <filter name="group_media" string="Media Type" context="{'group_by': 'media_type_id'}"/>
-                </group>
+                <separator/>
+                <filter name="group_supplier" string="Supplier" context="{'group_by': 'supplier_id'}"/>
+                <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                <filter name="group_media" string="Media Type" context="{'group_by': 'media_type_id'}"/>
             </search>
         </field>
     </record>
