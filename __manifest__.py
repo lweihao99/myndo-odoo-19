@@ -8,7 +8,7 @@
     'license': "AGPL-3",
     'maintainer': 'Weihao',
     'category': 'productivity',
-    'depends': ['base_setup','web'],
+    'depends': ['base_setup','web','mail'],
     'data': [
 		'views/holding_agency_view.xml',
 		'views/agency_view.xml',
