@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Myndo Media Type                                              -->
+    <!-- ============================================================ -->
+
+    <record id="myndo.media_type_form" model="ir.ui.view">
+        <field name="name">myndo.media_type_form</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.media_type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="myndo.media_type_tree" model="ir.ui.view">
+        <field name="name">myndo.media_type_tree</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.media_type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="myndo.media_type_search" model="ir.ui.view">
+        <field name="name">myndo.media_type_search</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.media_type</field>
+        <field name="arch" type="xml">
+            <search string="Media Type">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="myndo.media_type_action" model="ir.actions.act_window">
+        <field name="name">Media Types</field>
+        <field name="res_model">myndo.media_type</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="myndo.media_type_search"/>
+        <field name="view_id" ref="myndo.media_type_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click to add a new Media Type.</p>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Myndo Partner Tag                                             -->
+    <!-- ============================================================ -->
+
+    <record id="myndo.partner_tag_form" model="ir.ui.view">
+        <field name="name">myndo.partner_tag_form</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="color" widget="color_picker"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="myndo.partner_tag_tree" model="ir.ui.view">
+        <field name="name">myndo.partner_tag_tree</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="myndo.partner_tag_search" model="ir.ui.view">
+        <field name="name">myndo.partner_tag_search</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_tag</field>
+        <field name="arch" type="xml">
+            <search string="Partner Tag">
+                <field name="name"/>
+                <filter name="active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="myndo.partner_tag_action" model="ir.actions.act_window">
+        <field name="name">Partner Tags</field>
+        <field name="res_model">myndo.partner_tag</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="myndo.partner_tag_search"/>
+        <field name="view_id" ref="myndo.partner_tag_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Click to add a new Partner Tag.</p>
+        </field>
+    </record>
+
+</odoo>

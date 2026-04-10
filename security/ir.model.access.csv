@@ -38,5 +38,15 @@ myndo_cross_area_operation_filter,myndo.cross_area_operation_filter,model_myndo_
 myndo_cross_area_operation,myndo.cross_area_operation,model_myndo_cross_area_operation,base.group_user,1,1,1,1
 myndo_area_tag_color,myndo.area_tag_color,model_myndo_area_tag_color,base.group_user,1,1,1,1
 
+myndo_media_type,myndo.media_type,model_myndo_media_type,base.group_user,1,1,1,1
+myndo_partner_tag,myndo.partner_tag,model_myndo_partner_tag,base.group_user,1,1,1,1
 
+myndo_partner_client,myndo.partner_client,model_myndo_partner_client,base.group_user,1,1,1,1
+myndo_partner_client_contact,myndo.partner_client_contact,model_myndo_partner_client_contact,base.group_user,1,1,1,1
+myndo_partner_rebate,myndo.partner_rebate,model_myndo_partner_rebate,base.group_user,1,1,1,1
+myndo_partner_account,myndo.partner_account,model_myndo_partner_account,base.group_user,1,1,1,1
+myndo_partner_saleshouse_period,myndo.partner_saleshouse_period,model_myndo_partner_saleshouse_period,base.group_user,1,1,1,1
 
+myndo_partner_supplier,myndo.partner_supplier,model_myndo_partner_supplier,base.group_user,1,1,1,1
+myndo_partner_supplier_contact,myndo.partner_supplier_contact,model_myndo_partner_supplier_contact,base.group_user,1,1,1,1
+myndo_partner_agreement,myndo.partner_agreement,model_myndo_partner_agreement,base.group_user,1,1,1,1

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Supplier Partnership Archive - Form                            -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_supplier_form" model="ir.ui.view">
+        <field name="name">myndo.partner_supplier_form</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_supplier</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="active,inactive"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Supplier name..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="agency_id" options="{'no_create': True}"/>
+                            <field name="supplier_type"/>
+                            <field name="sourcing_type"/>
+                        </group>
+                        <group>
+                            <field name="dashboard_user_id"/>
+                            <field name="main_contact_id" options="{'no_create_edit': True}"/>
+                            <field name="currency_id"/>
+                            <field name="rebate_goal_eoy"/>
+                            <field name="active_agreement_count" readonly="1"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- Billing -->
+                        <page string="Billing" name="billing">
+                            <group>
+                                <group>
+                                    <field name="company_name"/>
+                                    <field name="vat_id"/>
+                                    <field name="fiscal_code"/>
+                                    <field name="pec_sdi"/>
+                                    <field name="payment_terms"/>
+                                </group>
+                                <group>
+                                    <field name="address"/>
+                                    <field name="postal_code"/>
+                                    <field name="city"/>
+                                    <field name="country_id"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Contacts -->
+                        <page string="Contacts" name="contacts">
+                            <field name="contact_ids" context="{'default_supplier_id': id}">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="surname"/>
+                                    <field name="role"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                    <field name="fiscal_code"/>
+                                    <field name="is_main" readonly="1"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name"/>
+                                                <field name="surname"/>
+                                                <field name="role"/>
+                                                <field name="fiscal_code"/>
+                                            </group>
+                                            <group>
+                                                <field name="email"/>
+                                                <field name="phone"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- Agreements -->
+                        <page string="Agreements" name="agreements">
+                            <field name="agreement_ids" context="{'default_supplier_id': id}">
+                                <list decoration-success="state == 'active'"
+                                      decoration-muted="state == 'expired'"
+                                      decoration-info="state == 'draft'">
+                                    <field name="name"/>
+                                    <field name="media_type_id"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Supplier Partnership Archive - List                            -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_supplier_tree" model="ir.ui.view">
+        <field name="name">myndo.partner_supplier_tree</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_supplier</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="agency_id"/>
+                <field name="supplier_type"/>
+                <field name="sourcing_type"/>
+                <field name="active_agreement_count"/>
+                <field name="rebate_goal_eoy"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="dashboard_user_id"/>
+                <field name="status"
+                       decoration-success="status == 'active'"
+                       decoration-muted="status == 'inactive'"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Supplier Partnership Archive - Kanban                          -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_supplier_kanban" model="ir.ui.view">
+        <field name="name">myndo.partner_supplier_kanban</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_supplier</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="supplier_type">
+                <field name="name"/>
+                <field name="agency_id"/>
+                <field name="active_agreement_count"/>
+                <field name="tag_ids"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <div class="o_kanban_record_top">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="agency_id"/><br/>
+                                <span>Active agreements: <field name="active_agreement_count"/></span>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Supplier Partnership Archive - Search                          -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_supplier_search" model="ir.ui.view">
+        <field name="name">myndo.partner_supplier_search</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_supplier</field>
+        <field name="arch" type="xml">
+            <search string="Supplier Archives">
+                <field name="name"/>
+                <field name="agency_id"/>
+                <field name="supplier_type"/>
+                <field name="dashboard_user_id"/>
+                <field name="tag_ids"/>
+                <filter name="active" string="Active" domain="[('status','=','active')]"/>
+                <filter name="inactive" string="Inactive" domain="[('status','=','inactive')]"/>
+                <separator/>
+                <filter name="standard" string="Standard Sourcing" domain="[('sourcing_type','=','standard')]"/>
+                <filter name="aggregated" string="Aggregated Sourcing" domain="[('sourcing_type','=','aggregated')]"/>
+                <separator/>
+                <filter name="my_archives" string="My Archives" domain="[('dashboard_user_id','=',uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_agency" string="Agency" context="{'group_by': 'agency_id'}"/>
+                    <filter name="group_type" string="Supplier Type" context="{'group_by': 'supplier_type'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="myndo.partner_supplier_action" model="ir.actions.act_window">
+        <field name="name">Supplier Archives</field>
+        <field name="res_model">myndo.partner_supplier</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="myndo.partner_supplier_search"/>
+        <field name="view_id" ref="myndo.partner_supplier_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Supplier Partnership Archive.
+            </p>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Agreement - Form                                               -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_agreement_form" model="ir.ui.view">
+        <field name="name">myndo.partner_agreement_form</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_agreement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Agreement name..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="supplier_id" options="{'no_create': True}"/>
+                            <field name="media_type_id"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attachments" name="attachments">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Agreement - List                                               -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_agreement_tree" model="ir.ui.view">
+        <field name="name">myndo.partner_agreement_tree</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_agreement</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'active'"
+                  decoration-muted="state == 'expired'"
+                  decoration-info="state == 'draft'">
+                <field name="name"/>
+                <field name="supplier_id"/>
+                <field name="media_type_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Agreement - Search                                             -->
+    <!-- ============================================================ -->
+    <record id="myndo.partner_agreement_search" model="ir.ui.view">
+        <field name="name">myndo.partner_agreement_search</field>
+        <field eval="10" name="priority"/>
+        <field name="model">myndo.partner_agreement</field>
+        <field name="arch" type="xml">
+            <search string="Agreements">
+                <field name="name"/>
+                <field name="supplier_id"/>
+                <field name="media_type_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="active" string="Active" domain="[('state','=','active')]"/>
+                <filter name="expired" string="Expired" domain="[('state','=','expired')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_supplier" string="Supplier" context="{'group_by': 'supplier_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_media" string="Media Type" context="{'group_by': 'media_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="myndo.partner_agreement_action" model="ir.actions.act_window">
+        <field name="name">Agreements</field>
+        <field name="res_model">myndo.partner_agreement</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="myndo.partner_agreement_search"/>
+        <field name="view_id" ref="myndo.partner_agreement_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Supplier Agreement.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="media_type_digital_display" model="myndo.media_type">
+        <field name="name">Digital Display</field>
+        <field name="code">DISPLAY</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="media_type_video" model="myndo.media_type">
+        <field name="name">Video</field>
+        <field name="code">VIDEO</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="media_type_social" model="myndo.media_type">
+        <field name="name">Social</field>
+        <field name="code">SOCIAL</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="media_type_search" model="myndo.media_type">
+        <field name="name">Search</field>
+        <field name="code">SEARCH</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="media_type_tv" model="myndo.media_type">
+        <field name="name">TV</field>
+        <field name="code">TV</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="media_type_radio" model="myndo.media_type">
+        <field name="name">Radio</field>
+        <field name="code">RADIO</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="media_type_ooh" model="myndo.media_type">
+        <field name="name">Out of Home</field>
+        <field name="code">OOH</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="media_type_print" model="myndo.media_type">
+        <field name="name">Print</field>
+        <field name="code">PRINT</field>
+        <field name="sequence">80</field>
+    </record>
+
+</odoo>

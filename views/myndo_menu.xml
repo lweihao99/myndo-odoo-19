@@ -37,4 +37,12 @@
 			<menuitem sequence="10" id="myndo.platforms_meta_menu" name="Meta" parent="myndo.platforms_menu" />
 			<menuitem sequence="15" id="myndo.platforms_google_menu" name="Google" parent="myndo.platforms_menu" />
 
+		<!-- partners main menu -->
+		<menuitem sequence="2" id="myndo.partners_menu" name="Partners" parent="myndo.main_menu" />
+			<menuitem sequence="5" id="myndo.partner_client_menu" name="Client Archives" parent="myndo.partners_menu" action="myndo.partner_client_action"/>
+			<menuitem sequence="10" id="myndo.partner_supplier_menu" name="Supplier Archives" parent="myndo.partners_menu" action="myndo.partner_supplier_action"/>
+			<menuitem sequence="15" id="myndo.partner_agreement_menu" name="Agreements" parent="myndo.partners_menu" action="myndo.partner_agreement_action"/>
+			<menuitem sequence="20" id="myndo.media_type_menu" name="Media Types" parent="myndo.partners_menu" action="myndo.media_type_action"/>
+			<menuitem sequence="25" id="myndo.partner_tag_menu" name="Partner Tags" parent="myndo.partners_menu" action="myndo.partner_tag_action"/>
+
 </odoo>

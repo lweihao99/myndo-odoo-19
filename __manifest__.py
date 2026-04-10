@@ -29,6 +29,15 @@
 		'views/cross_area_view.xml',
 		'views/area_tag_color_view.xml',
 		'views/myndo_area_test.xml',
+
+		'data/myndo_media_type_data.xml',
+		'views/partners_common_views.xml',
+
+		'views/partner_client_views.xml',
+
+		'views/partner_supplier_views.xml',
+		'data/myndo_partner_agreement_cron.xml',
+
         'views/myndo_menu.xml',
 		'security/ir.model.access.csv',
 	],
