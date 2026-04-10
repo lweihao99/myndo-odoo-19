@@ -12,14 +12,20 @@ export PGDATABASE="${DB_NAME}"
 unset DATABASE_URL DATABASE_PUBLIC_URL
 unset POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD PGDATA
 
-# Install/update myndo module (also initializes base on first run)
-# Use -i to install if not present, -u to update if already installed
-echo "=== Installing/updating myndo module ==="
-python3 /usr/bin/odoo \
-    --config=/etc/odoo/odoo.conf \
-    -i base,myndo \
-    --stop-after-init \
-    --no-http 2>&1 || echo "=== Init finished (errors above may be ignored if module already installed) ==="
+# Check if myndo is already installed; if not, run init
+MYNDO_INSTALLED=$(psql -h "${DB_HOST}" -U "${DB_USER}" -d "${DB_NAME}" -tAc \
+    "SELECT state FROM ir_module_module WHERE name='myndo'" 2>/dev/null || echo "")
+
+if [ "$MYNDO_INSTALLED" != "installed" ]; then
+    echo "=== Myndo not installed (state='${MYNDO_INSTALLED}'), running init ==="
+    python3 /usr/bin/odoo \
+        --config=/etc/odoo/odoo.conf \
+        -i base,myndo \
+        --stop-after-init \
+        --no-http 2>&1 || echo "=== Init finished ==="
+else
+    echo "=== Myndo already installed, skipping init ==="
+fi
 
 # Start Odoo normally
 echo "=== Starting Odoo server ==="

@@ -2,6 +2,9 @@ FROM odoo:19
 
 USER root
 
+# Install psql for install-state check in entrypoint
+RUN apt-get update && apt-get install -y --no-install-recommends postgresql-client && rm -rf /var/lib/apt/lists/*
+
 # Copy custom addon
 COPY . /mnt/extra-addons/myndo
 RUN chown -R odoo:odoo /mnt/extra-addons/myndo
