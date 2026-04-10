@@ -12,15 +12,17 @@ export PGDATABASE="${DB_NAME}"
 unset DATABASE_URL DATABASE_PUBLIC_URL
 unset POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD PGDATA
 
-# Initialize database if not yet done (check for ir_module_module table)
+# Install/update myndo module (also initializes base on first run)
+# Use -i to install if not present, -u to update if already installed
+echo "=== Installing/updating myndo module ==="
 python3 /usr/bin/odoo \
     --config=/etc/odoo/odoo.conf \
-    --init=base \
+    -i base,myndo \
     --stop-after-init \
-    --http-port="${PORT:-8069}" \
-    --http-interface=0.0.0.0 2>&1 || true
+    --no-http 2>&1 || echo "=== Init finished (errors above may be ignored if module already installed) ==="
 
-# Start Odoo
+# Start Odoo normally
+echo "=== Starting Odoo server ==="
 exec python3 /usr/bin/odoo \
     --config=/etc/odoo/odoo.conf \
     --http-port="${PORT:-8069}" \
